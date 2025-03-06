@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+  news-canvas:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env.local
+    volumes:
+      - ./.env.local:/app/.env.local:ro
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+      - PORT=3000 

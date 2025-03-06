@@ -54,6 +54,8 @@ You'll need to obtain API keys from:
 
 ### Running with Docker
 
+#### Option 1: Using the Dockerfile directly
+
 1. Build the Docker image:
    ```
    docker build -t news-canvas .
@@ -65,6 +67,29 @@ You'll need to obtain API keys from:
    ```
 
 3. Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+#### Option 2: Using Docker Compose (Recommended)
+
+1. Make sure you have Docker Compose installed.
+
+2. Run the application:
+   ```
+   docker-compose up -d
+   ```
+
+3. Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+4. To stop the application:
+   ```
+   docker-compose down
+   ```
+
+#### Docker Deployment Notes
+
+- The application runs on port 3000 by default.
+- Environment variables are loaded from your `.env.local` file.
+- For production deployment, consider using environment-specific configuration.
+- The container is configured to restart automatically unless explicitly stopped.
 
 ## Project Structure
 
@@ -78,6 +103,28 @@ You'll need to obtain API keys from:
   - `/hooks`: Custom React hooks
   - `/services`: API service functions
   - `/types`: TypeScript type definitions
+
+## Software Development Best Practices
+
+This project follows key software development principles:
+
+### DRY (Don't Repeat Yourself)
+- Common utility functions are centralized in `/lib/utils.ts`
+- Reusable components like `ArticleCard` are parameterized and reused
+- Shared API handling logic is consolidated in service modules
+
+### KISS (Keep It Simple, Stupid)
+- Clear, straightforward component organization
+- Intuitive project structure
+- Minimal dependencies
+- Self-explanatory function names
+
+### SOLID Principles
+- **Single Responsibility**: Each component and function has a specific purpose
+- **Open-Closed**: UI components can be extended without modification
+- **Liskov Substitution**: Type interfaces ensure consistent behavior
+- **Interface Segregation**: Small, focused component props and function parameters
+- **Dependency Inversion**: Higher-level components depend on abstractions
 
 ## License
 
