@@ -100,25 +100,6 @@ You'll need to obtain API keys from:
    docker-compose down
    ```
 
-#### Troubleshooting Docker
-
-- **Environment Variables**: Make sure your `.env.local` file is in the correct location and properly formatted.
-- **Port Conflicts**: If port 3000 is already in use, modify the port mapping in your docker-compose.yml or docker run command (e.g., `-p 3001:3000`).
-- **Build Issues**: If you encounter build errors, try rebuilding with no cache:
-  ```
-  docker-compose build --no-cache
-  ```
-- **Performance**: For improved performance on macOS or Windows, adjust Docker Desktop resource settings.
-- **Version Warning**: If you receive a warning about docker-compose version being obsolete, it's safe to ignore as the file is still compatible.
-
-#### Production Docker Deployment
-
-For production environments, consider:
-- Using environment-specific config files
-- Setting up a reverse proxy like Nginx
-- Implementing proper logging solutions
-- Configuring health checks
-- Setting up auto-restart policies
 
 ## Project Structure
 
@@ -133,28 +114,4 @@ For production environments, consider:
   - `/services`: API service functions
   - `/types`: TypeScript type definitions
 
-## Software Development Best Practices
-
-This project follows key software development principles:
-
-### DRY (Don't Repeat Yourself)
-- Common utility functions are centralized in `/lib/utils.ts`
-- Reusable components like `ArticleCard` are parameterized and reused
-- Shared API handling logic is consolidated in service modules
-
-### KISS (Keep It Simple, Stupid)
-- Clear, straightforward component organization
-- Intuitive project structure
-- Minimal dependencies
-- Self-explanatory function names
-
-### SOLID Principles
-- **Single Responsibility**: Each component and function has a specific purpose
-- **Open-Closed**: UI components can be extended without modification
-- **Liskov Substitution**: Type interfaces ensure consistent behavior
-- **Interface Segregation**: Small, focused component props and function parameters
-- **Dependency Inversion**: Higher-level components depend on abstractions
-
 ## License
-
-This project is licensed under the MIT License.
