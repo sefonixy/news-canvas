@@ -1,122 +1,51 @@
-import Image from "next/image";
-import { Button } from "@/components/ui/button";
+'use client';
+
+import React from 'react';
+import { ArticleList } from '@/components/news/ArticleList';
+import { Filters } from '@/components/news/Filters';
+import { DebugInfo } from '@/components/news/DebugInfo';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { useNews } from '@/lib/context/NewsContext';
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+  const { articles, filteredArticles, personalizedArticles, isLoading, error } = useNews();
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <Button
-            className="flex items-center gap-2"
-            size="lg"
-            asChild
-          >
-            <a
-              href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <Image
-                className="dark:invert"
-                src="/vercel.svg"
-                alt="Vercel logomark"
-                width={20}
-                height={20}
-              />
-              Deploy now
-            </a>
-          </Button>
-          <Button
-            variant="outline"
-            size="lg"
-            asChild
-          >
-            <a
-              href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Read our docs
-            </a>
-          </Button>
+  return (
+    <div className="container max-w-full py-4 md:py-8 px-4 md:px-6">
+      <div className="mb-6 md:mb-8">
+        <h1 className="text-2xl md:text-3xl font-bold mb-2">Latest News</h1>
+        <p className="text-muted-foreground">
+          Stay informed with the latest news from multiple trusted sources.
+        </p>
+      </div>
+
+      <Filters />
+
+      <Tabs defaultValue="all" className="mb-6 md:mb-8 w-full">
+        <TabsList className="mb-2 w-full md:w-auto">
+          <TabsTrigger value="all" className="flex-1 md:flex-none">All News</TabsTrigger>
+          <TabsTrigger value="filtered" className="flex-1 md:flex-none">Filtered</TabsTrigger>
+          <TabsTrigger value="personalized" className="flex-1 md:flex-none">For You</TabsTrigger>
+        </TabsList>
+        <TabsContent value="all" className="mt-2 md:mt-4">
+          <ArticleList articles={articles} isLoading={isLoading} />
+        </TabsContent>
+        <TabsContent value="filtered" className="mt-2 md:mt-4">
+          <ArticleList articles={filteredArticles} isLoading={isLoading} />
+        </TabsContent>
+        <TabsContent value="personalized" className="mt-2 md:mt-4">
+          <ArticleList articles={personalizedArticles} isLoading={isLoading} />
+        </TabsContent>
+      </Tabs>
+
+      {error && (
+        <div className="p-4 border border-destructive text-destructive rounded-md mb-4">
+          <p className="mb-2 font-medium">Error loading news:</p>
+          <p>{error}</p>
         </div>
-        
-        {/* Shadcn UI Button Variants Demo */}
-        <div className="flex flex-wrap gap-4 mt-8">
-          <Button>Default Button</Button>
-          <Button variant="secondary">Secondary</Button>
-          <Button variant="destructive">Destructive</Button>
-          <Button variant="outline">Outline</Button>
-          <Button variant="ghost">Ghost</Button>
-          <Button variant="link">Link</Button>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+      )}
+      
+      <DebugInfo />
     </div>
   );
 }
