@@ -1,4 +1,3 @@
-// Common article interface to standardize across different news APIs
 export interface Article {
   id: string;
   title: string;
@@ -13,7 +12,6 @@ export interface Article {
   apiSource: 'newsapi' | 'guardian' | 'nytimes'; // Tracking which API provided this article
 }
 
-// Filters for searching and filtering articles
 export interface NewsFilters {
   query?: string;
   sources?: string[];
@@ -25,14 +23,12 @@ export interface NewsFilters {
   pageSize?: number;
 }
 
-// User preferences for personalized feed
 export interface UserPreferences {
   preferredSources: string[];
   preferredCategories: string[];
   preferredAuthors: string[];
 }
 
-// News API interfaces
 export interface NewsApiArticle {
   source: {
     id: string | null;
@@ -53,7 +49,6 @@ export interface NewsApiResponse {
   articles: NewsApiArticle[];
 }
 
-// Guardian API interfaces
 export interface GuardianArticle {
   id: string;
   sectionId: string;
@@ -84,7 +79,6 @@ export interface GuardianResponse {
   };
 }
 
-// NY Times API interfaces
 export interface NYTimesArticle {
   web_url: string;
   snippet: string;

@@ -22,22 +22,18 @@ export function PreferencesForm() {
   const [authorInput, setAuthorInput] = useState('');
   const [authorsList, setAuthorsList] = useState<string[]>(preferences.preferredAuthors || []);
 
-  // Fetch sources and categories
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
       try {
-        // Fetch sources
         const newsApiSources = await fetchNewsApiSources();
         
-        // Fetch categories from all 3 APIs
         const [newsApiCategories, guardianSections, nyTimesCategories] = await Promise.all([
           fetchNewsApiCategories(),
           fetchGuardianSections(),
           fetchNYTimesCategories()
         ]);
         
-        // Combine and remove duplicates
         const allSources = Array.from(new Set(newsApiSources));
         const allCategories = Array.from(new Set([
           ...newsApiCategories, 
@@ -57,7 +53,6 @@ export function PreferencesForm() {
     fetchData();
   }, []);
 
-  // Handle source selection
   const handleSourceChange = (source: string, checked: boolean) => {
     const newSources = checked
       ? [...preferences.preferredSources, source]
@@ -66,7 +61,6 @@ export function PreferencesForm() {
     updatePreferredSources(newSources);
   };
 
-  // Handle category selection
   const handleCategoryChange = (category: string, checked: boolean) => {
     const newCategories = checked
       ? [...preferences.preferredCategories, category]
@@ -75,23 +69,18 @@ export function PreferencesForm() {
     updatePreferredCategories(newCategories);
   };
 
-  // Handle adding an author
   const handleAddAuthor = (e: React.FormEvent) => {
     e.preventDefault();
     if (!authorInput.trim()) return;
     
-    // Add to local state
     const newAuthors = [...authorsList, authorInput.trim()];
     setAuthorsList(newAuthors);
     
-    // Update context
     updatePreferredAuthors(newAuthors);
     
-    // Reset input
     setAuthorInput('');
   };
 
-  // Handle removing an author
   const handleRemoveAuthor = (author: string) => {
     const newAuthors = authorsList.filter(a => a !== author);
     setAuthorsList(newAuthors);
@@ -108,7 +97,6 @@ export function PreferencesForm() {
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
-          {/* Preferred Sources */}
           <div className="space-y-4">
             <h3 className="text-lg font-medium">Preferred Sources</h3>
             <p className="text-sm text-muted-foreground">
@@ -139,7 +127,6 @@ export function PreferencesForm() {
             </div>
           </div>
 
-          {/* Preferred Categories */}
           <div className="space-y-4">
             <h3 className="text-lg font-medium">Preferred Categories</h3>
             <p className="text-sm text-muted-foreground">
@@ -170,7 +157,6 @@ export function PreferencesForm() {
             </div>
           </div>
 
-          {/* Preferred Authors */}
           <div className="space-y-4">
             <h3 className="text-lg font-medium">Preferred Authors</h3>
             <p className="text-sm text-muted-foreground">

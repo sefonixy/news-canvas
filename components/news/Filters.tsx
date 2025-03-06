@@ -21,22 +21,18 @@ export function Filters() {
   const [isLoading, setIsLoading] = useState(true);
   const [isExpanded, setIsExpanded] = useState(false);
 
-  // Fetch sources and categories from all APIs
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
       try {
-        // Fetch sources
         const newsApiSources = await fetchNewsApiSources();
         
-        // Fetch categories from all 3 APIs
         const [newsApiCategories, guardianSections, nyTimesCategories] = await Promise.all([
           fetchNewsApiCategories(),
           fetchGuardianSections(),
           fetchNYTimesCategories()
         ]);
         
-        // Combine and remove duplicates
         const allSources = Array.from(new Set(newsApiSources));
         const allCategories = Array.from(new Set([
           ...newsApiCategories, 
@@ -56,12 +52,10 @@ export function Filters() {
     fetchData();
   }, []);
 
-  // Toggle expand/collapse
   const toggleExpand = () => {
     setIsExpanded(!isExpanded);
   };
 
-  // Handle source selection
   const handleSourceChange = (source: string, checked: boolean) => {
     const newSources = checked
       ? [...(filters.sources || []), source]
@@ -70,7 +64,6 @@ export function Filters() {
     updateSources(newSources);
   };
 
-  // Handle category selection
   const handleCategoryChange = (category: string, checked: boolean) => {
     const newCategories = checked
       ? [...(filters.categories || []), category]
@@ -79,7 +72,6 @@ export function Filters() {
     updateCategories(newCategories);
   };
 
-  // Handle date changes
   const handleFromDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     updateDateRange(e.target.value, filters.toDate);
   };
@@ -104,7 +96,6 @@ export function Filters() {
 
       {isExpanded && (
         <div className="space-y-3 md:space-y-4">
-          {/* Date Filters */}
           <div className="space-y-1 md:space-y-2">
             <h4 className="text-sm font-medium">Date Range</h4>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
@@ -131,7 +122,6 @@ export function Filters() {
             </div>
           </div>
 
-          {/* Categories Filter */}
           <div className="space-y-1 md:space-y-2">
             <h4 className="text-sm font-medium">Categories</h4>
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-1 md:gap-2">
@@ -160,7 +150,6 @@ export function Filters() {
             </div>
           </div>
 
-          {/* Sources Filter */}
           <div className="space-y-1 md:space-y-2">
             <h4 className="text-sm font-medium">Sources</h4>
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-1 md:gap-2">

@@ -12,7 +12,6 @@ export function Header() {
   
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
-    // The search is already handled by the controlled input
   };
 
   const toggleMenu = () => {

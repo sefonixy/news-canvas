@@ -54,42 +54,71 @@ You'll need to obtain API keys from:
 
 ### Running with Docker
 
-#### Option 1: Using the Dockerfile directly
+#### Option 1: Using Docker Directly
 
-1. Build the Docker image:
+1. Make sure Docker is installed and running on your machine.
+
+2. Build the Docker image:
    ```
    docker build -t news-canvas .
    ```
 
-2. Run the container:
+3. Run the container with your environment variables:
    ```
    docker run -p 3000:3000 --env-file .env.local news-canvas
    ```
 
-3. Open [http://localhost:3000](http://localhost:3000) in your browser.
+4. Access the application at [http://localhost:3000](http://localhost:3000)
+
+5. To stop the container, press `Ctrl+C` in the terminal or find and stop the container using:
+   ```
+   docker ps
+   docker stop <container_id>
+   ```
 
 #### Option 2: Using Docker Compose (Recommended)
 
-1. Make sure you have Docker Compose installed.
+1. Make sure Docker and Docker Compose are installed.
 
-2. Run the application:
+2. Create or verify your `.env.local` file exists in the project root.
+
+3. Start the application:
    ```
    docker-compose up -d
    ```
+   The `-d` flag runs containers in the background. If you want to see logs directly, omit this flag.
 
-3. Open [http://localhost:3000](http://localhost:3000) in your browser.
+4. Access the application at [http://localhost:3000](http://localhost:3000)
 
-4. To stop the application:
+5. View logs (if running in detached mode):
+   ```
+   docker-compose logs -f
+   ```
+
+6. To stop the application:
    ```
    docker-compose down
    ```
 
-#### Docker Deployment Notes
+#### Troubleshooting Docker
 
-- The application runs on port 3000 by default.
-- Environment variables are loaded from your `.env.local` file.
-- For production deployment, consider using environment-specific configuration.
-- The container is configured to restart automatically unless explicitly stopped.
+- **Environment Variables**: Make sure your `.env.local` file is in the correct location and properly formatted.
+- **Port Conflicts**: If port 3000 is already in use, modify the port mapping in your docker-compose.yml or docker run command (e.g., `-p 3001:3000`).
+- **Build Issues**: If you encounter build errors, try rebuilding with no cache:
+  ```
+  docker-compose build --no-cache
+  ```
+- **Performance**: For improved performance on macOS or Windows, adjust Docker Desktop resource settings.
+- **Version Warning**: If you receive a warning about docker-compose version being obsolete, it's safe to ignore as the file is still compatible.
+
+#### Production Docker Deployment
+
+For production environments, consider:
+- Using environment-specific config files
+- Setting up a reverse proxy like Nginx
+- Implementing proper logging solutions
+- Configuring health checks
+- Setting up auto-restart policies
 
 ## Project Structure
 

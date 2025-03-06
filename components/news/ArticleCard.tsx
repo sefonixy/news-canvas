@@ -20,14 +20,12 @@ export function ArticleCard({ article }: ArticleCardProps) {
     url,
   } = article;
 
-  // Format date
   const formattedDate = new Date(publishedAt).toLocaleDateString('en-US', {
     year: 'numeric',
     month: 'long',
     day: 'numeric',
   });
 
-  // Get initials for avatar fallback
   const getSourceInitials = (source: string) => {
     return source
       .split(' ')
@@ -66,7 +64,6 @@ export function ArticleCard({ article }: ArticleCardProps) {
             alt={title}
             className="w-full h-full object-cover"
             onError={(e) => {
-              // Handle image loading errors
               e.currentTarget.style.display = 'none';
             }}
           />
